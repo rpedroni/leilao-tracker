@@ -39,9 +39,19 @@ Busca diária de leilões de imóveis em Curitiba/Grande Curitiba, enviando resu
 - Formato limpo, sem emojis excessivos
 
 ### GitHub Pages
+**Fluxo diário:**
+1. Buscar melhores oportunidades do dia
+2. Gerar mensagem WhatsApp com Top 3
+3. Atualizar `index.html` com lista atual de ativos
+4. Criar `YYYY-MM-DD.html` como snapshot histórico
+
 **Estrutura:**
 - `index.html` → Lista principal com todos os imóveis bons AINDA ATIVOS
-- `YYYY-MM-DD.html` → Snapshot do dia (histórico)
+- `YYYY-MM-DD.html` → Snapshot do dia (histórico, mantido pra consulta)
+
+**Navegação:**
+- Todas as páginas têm nav com links pras datas
+- Formato: `📅 Histórico: Atual | 30/01 | 29/01 | ...`
 
 **Conteúdo:**
 - Cards clicáveis
