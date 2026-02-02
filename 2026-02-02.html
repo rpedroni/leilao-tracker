@@ -14,6 +14,8 @@
     nav { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
     nav a { color: #58a6ff; text-decoration: none; padding: 5px 10px; border-radius: 6px; background: #21262d; }
     nav a:hover, nav a.active { background: #388bfd; color: #fff; }
+    .translate-btn { background: #238636; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9em; margin-top: 15px; }
+    .translate-btn:hover { background: #2ea043; }
     .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
     .stat { background: #161b22; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #30363d; }
     .stat-value { font-size: 2em; font-weight: bold; color: #58a6ff; }
@@ -45,7 +47,8 @@
   <div class="container">
     <header>
       <h1>🏠 Leilão Tracker</h1>
-      <p>Oportunidades imobiliárias em Curitiba e região • Atualizado 02/02/2026</p>
+      <p id="subtitle">Oportunidades imobiliárias em Curitiba e região • Atualizado 02/02/2026</p>
+      <button class="translate-btn" onclick="toggleLanguage()">🌐 English</button>
       <nav>
         <a href="index.html">📍 Atual</a>
         <a href="2026-02-02.html" class="active">02/02</a>
@@ -395,5 +398,66 @@
       <p>Fontes: Leilão Imóvel, Portal Zuk, Mega Leilões</p>
     </footer>
   </div>
+<script>
+  const translations = {
+    pt: {
+      subtitle: 'Oportunidades imobiliárias em Curitiba e região • Atualizado 02/02/2026',
+      btn: '🌐 English',
+      stats: ['Imóveis Ativos', 'Maior Desconto', 'Menor Lance', 'Novos Hoje'],
+      labels: {
+        'Lance Atual (2ª Praça)': 'Current Bid (2nd Round)',
+        'Lance (2ª Praça)': 'Bid (2nd Round)',
+        'Lance Inicial': 'Starting Bid',
+        'Compra Direta': 'Direct Purchase',
+        'Avaliação': 'Appraisal',
+        'Valor': 'Value',
+        'Ver Detalhes →': 'View Details →'
+      },
+      footer: ['🐦 Avê • Leilão Tracker • Atualizado automaticamente', 'Fontes: Leilão Imóvel, Portal Zuk, Mega Leilões']
+    },
+    en: {
+      subtitle: 'Real estate auction opportunities in Curitiba, Brazil • Updated 02/02/2026',
+      btn: '🌐 Português',
+      stats: ['Active Properties', 'Highest Discount', 'Lowest Bid', 'New Today'],
+      labels: {
+        'Lance Atual (2ª Praça)': 'Current Bid (2nd Round)',
+        'Lance (2ª Praça)': 'Bid (2nd Round)',
+        'Lance Inicial': 'Starting Bid',
+        'Compra Direta': 'Direct Purchase',
+        'Avaliação': 'Appraisal',
+        'Valor': 'Value',
+        'Ver Detalhes →': 'View Details →'
+      },
+      footer: ['🐦 Avê • Leilão Tracker • Auto-updated', 'Sources: Leilão Imóvel, Portal Zuk, Mega Leilões']
+    }
+  };
+  let currentLang = 'pt';
+  
+  function toggleLanguage() {
+    currentLang = currentLang === 'pt' ? 'en' : 'pt';
+    const t = translations[currentLang];
+    
+    document.getElementById('subtitle').textContent = t.subtitle;
+    document.querySelector('.translate-btn').textContent = t.btn;
+    
+    document.querySelectorAll('.stat-label').forEach((el, i) => {
+      if (t.stats[i]) el.textContent = t.stats[i];
+    });
+    
+    document.querySelectorAll('.price-label').forEach(el => {
+      const orig = el.dataset.orig || el.textContent;
+      el.dataset.orig = orig;
+      el.textContent = currentLang === 'en' && translations.en.labels[orig] ? translations.en.labels[orig] : orig;
+    });
+    
+    document.querySelectorAll('.card-link').forEach(el => {
+      el.textContent = currentLang === 'en' ? 'View Details →' : 'Ver Detalhes →';
+    });
+    
+    const footerPs = document.querySelectorAll('footer p');
+    footerPs[0].textContent = t.footer[0];
+    footerPs[1].textContent = t.footer[1];
+  }
+</script>
 </body>
 </html>
