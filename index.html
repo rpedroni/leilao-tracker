@@ -24,8 +24,8 @@
     .card { background: #161b22; border-radius: 12px; padding: 20px; border: 1px solid #30363d; transition: transform 0.2s, border-color 0.2s; }
     .card:hover { transform: translateY(-2px); border-color: #58a6ff; }
     .card.priority { border-left: 4px solid #f0883e; }
-    .card.new { position: relative; }
-    .card.new::after { content: 'NOVO'; position: absolute; top: 10px; right: 10px; background: #238636; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; font-weight: bold; }
+    .card.new { position: relative; overflow: hidden; }
+    .card.new::after { content: 'NOVO'; position: absolute; top: 12px; left: -28px; background: #238636; color: #fff; padding: 4px 32px; font-size: 0.7em; font-weight: bold; transform: rotate(-45deg); box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
     .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
     .card-title { font-size: 1.1em; color: #f0f6fc; }
     .card-discount { background: #238636; color: #fff; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9em; }
