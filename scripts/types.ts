@@ -16,6 +16,10 @@ export interface Property {
   link: string;
   novo?: boolean;
   prioridade?: boolean;
+  /** True when listing explicitly excludes parking (e.g. Caixa "Sem Direito ao Uso Das Vagas") */
+  semVagas?: boolean;
+  /** Warnings/red flags detected during scraping */
+  alertas?: string[];
 }
 
 export const PRIORITY_NEIGHBORHOODS = [

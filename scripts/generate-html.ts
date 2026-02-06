@@ -239,6 +239,8 @@ function generatePropertyCard(property: Property, isTop: boolean = false): strin
           ${property.encerramento ? `<span class="meta-tag">Encerramento: ${formatDateBR(new Date(property.encerramento))}</span>` : ''}
           ${property.ocupacao === 'ocupado' ? '<span class="meta-tag">⚠️ Ocupado</span>' : ''}
           ${property.ocupacao === 'desocupado' ? '<span class="meta-tag">✅ Desocupado</span>' : ''}
+          ${property.semVagas ? '<span class="meta-tag" style="background:#da3633;color:#fff">⛔ SEM VAGAS</span>' : ''}
+          ${(property.alertas || []).filter(a => !a.includes('SEM VAGAS')).map(a => `<span class="meta-tag" style="background:#d29922;color:#000">${a}</span>`).join('')}
         </div>
         <a href="${property.link}" target="_blank" class="card-link">Ver no ${property.fonte} →</a>
       </div>`;

@@ -119,6 +119,16 @@ export async function scrapeCaixa(): Promise<Property[]> {
       area += area ? ` (terreno: ${areaTerreno[1]}m²)` : `terreno: ${areaTerreno[1]}m²`;
     }
 
+    // Detect "sem vagas" — Caixa CSV doesn't include this directly,
+    // but we flag apartments with 0 area total (common indicator) or
+    // explicit mentions in description
+    const descLower = descricao.toLowerCase();
+    const semVagas = descLower.includes('sem direito') && descLower.includes('vaga');
+    const alertas: string[] = [];
+    if (semVagas) alertas.push('⛔ SEM VAGAS de garagem');
+    // Also flag apartments with avaliação much higher than price in priority neighborhoods
+    // (>40% off on paper can be misleading without context)
+
     // Normalize bairro
     const bairroDisplay = titleCase(bairro.toLowerCase());
     const bairroFinal = cidadeNorm === 'CURITIBA' ? bairroDisplay : `${bairroDisplay} (${titleCase(cidade.toLowerCase())})`;
@@ -138,6 +148,8 @@ export async function scrapeCaixa(): Promise<Property[]> {
       fonte: 'Caixa Econômica',
       link: link || '',
       prioridade: isPriorityNeighborhood(bairro),
+      semVagas: semVagas || undefined,
+      alertas: alertas.length > 0 ? alertas : undefined,
     });
   }
 

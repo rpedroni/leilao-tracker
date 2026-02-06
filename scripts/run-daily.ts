@@ -83,6 +83,28 @@ async function runDaily() {
     
     const withNewFlags = markNewProperties(deduplicated, previousProperties);
     
+    // Step 3.5: Apply manual overrides (semVagas, alertas, etc.)
+    const overridesFile = join(DATA_DIR, 'property-overrides.json');
+    if (existsSync(overridesFile)) {
+      try {
+        const overrides = JSON.parse(await Bun.file(overridesFile).text());
+        let overrideCount = 0;
+        for (const prop of withNewFlags) {
+          const override = overrides[prop.id];
+          if (override) {
+            if (override.semVagas) prop.semVagas = true;
+            if (override.alertas) {
+              prop.alertas = [...(prop.alertas || []), ...override.alertas];
+            }
+            overrideCount++;
+          }
+        }
+        if (overrideCount > 0) log(`Applied ${overrideCount} manual overrides`);
+      } catch (error) {
+        log(`Could not load overrides: ${error}`, 'warn');
+      }
+    }
+    
     // Step 4: Save today's data
     log('Step 4: Saving data...');
     const today = formatDate();

@@ -1,0 +1,8 @@
+{
+  "_comment": "Manual overrides for properties where automated scraping misses important details. Added by Avê during deep dives.",
+  "caixa-10209029": {
+    "semVagas": true,
+    "alertas": ["⛔ SEM VAGAS de garagem (confirmado via Caixa detail page)", "⚠️ Preço atualizado no site: R$704.762 (38.77% off R$1.151.000)"],
+    "notes": "Ed. Zurique, Jardim Social. Comparable unit in same building (Apto 11A, 127m², 3q, 1 vaga) listed at R$598k on Chaves na Mão. This deal is NOT worth it without garage."
+  }
+}
