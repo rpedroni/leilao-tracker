@@ -1,0 +1,16 @@
+{
+  "name": "leilao-tracker",
+  "version": "1.0.0",
+  "description": "Automated auction property scraper for Curitiba region",
+  "type": "module",
+  "scripts": {
+    "scrape": "tsx scripts/scrape.ts",
+    "scrape:zuk": "tsx scripts/scrape.ts --source=zuk",
+    "scrape:caixa": "tsx scripts/scrape.ts --source=caixa"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "string-similarity": "^4.0.4",
+    "tsx": "^4.19.0"
+  }
+}
