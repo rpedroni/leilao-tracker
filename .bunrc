@@ -1,0 +1,5 @@
+# Bun runtime configuration
+# This ensures scripts can find bun in the path
+
+[install]
+registry = "https://registry.npmjs.org/"

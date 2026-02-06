@@ -84,7 +84,8 @@ function titleCase(s: string): string {
 function parseBRL(s: string): number {
   // "R$ 383.675,28" → 383675.28
   const clean = s.replace(/[R$\s]/g, "").replace(/\./g, "").replace(",", ".");
-  return parseFloat(clean) || 0;
+  const val = parseFloat(clean) || 0;
+  return Math.round(val * 100) / 100; // round to cents
 }
 
 function parseDate(s: string): string | null {
@@ -152,12 +153,17 @@ async function scrapeZukListing(url: string, cityName: string): Promise<Property
       const tipoMatch = title.match(/^(\w[\w\s]*?) em leilão/);
       const tipo = tipoMatch ? tipoMatch[1] : $card.find(".card-property-price-lote").first().text().trim();
 
-      // Address and bairro
+      // Address and bairro — extract city from location text
       const addressEl = $card.find(".card-property-address");
       const locationSpan = addressEl.find("span[style]").first().text().trim();
-      // "Curitiba / PR - Portão"
+      // "Curitiba / PR - Portão" or "São José dos Pinhais / PR - Centro"
+      const cityMatch = locationSpan.match(/^(.+?)\s*\/\s*PR/);
+      const actualCity = cityMatch ? cityMatch[1].trim() : "";
+      const isCtba = normalize(actualCity) === "curitiba" || actualCity === "";
       const bairroMatch = locationSpan.match(/- (.+)$/);
-      const bairro = bairroMatch ? bairroMatch[1].trim() : cityName;
+      const rawBairro = bairroMatch ? bairroMatch[1].trim() : cityName;
+      // For non-Curitiba cities, append the city name to bairro
+      const bairro = isCtba ? rawBairro : `${rawBairro} (${actualCity || titleCase(cityName.replace(/-/g, " "))})`;
       const enderecoSpan = addressEl.find("span[style='flex-basis: 100%;margin-left:2.5rem;']").text().trim();
       const endereco = enderecoSpan || "";
 
@@ -314,7 +320,7 @@ async function scrapeZuk(): Promise<Property[]> {
   console.log(`  📋 Fetching details for ${allProperties.length} Zuk properties...`);
   for (const prop of allProperties) {
     await scrapeZukDetail(prop);
-    await sleep(300);
+    await sleep(1000); // 1s delay to avoid 429 rate limiting
   }
 
   return allProperties;
@@ -449,10 +455,12 @@ function filterProperties(properties: Property[]): Property[] {
   return properties.filter(p => {
     // Price filter
     if (p.lance > MAX_PRICE) return false;
-    // Discount filter (skip for items where we couldn't calculate discount)
-    if (p.desconto > 0 && p.desconto < MIN_DISCOUNT) return false;
-    // Skip items with 0% discount from Caixa (they're above-market price listings for SFI auctions)
-    if (p.fonte === "Caixa Econômica" && p.desconto === 0) return false;
+    // Discount filter: must have meaningful discount
+    // Items with 0% discount are only kept if avaliacao is 0 (unknown appraisal)
+    if (p.desconto < MIN_DISCOUNT) {
+      // Keep only if we truly don't know the appraisal value
+      if (p.avaliacao > 0) return false;
+    }
     return true;
   });
 }
