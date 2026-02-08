@@ -6580,5 +6580,43 @@
     "descontoReal": -110,
     "score": 18,
     "scoreBreakdown": "Desc:0/25 | Real:0/25 | Vagas:3/15(?) | Bairro:3/10 | Ocup:5/10(?) | Prazo:7/15(aberto)"
+  },
+  {
+    "id": "topo-32506",
+    "tipo": "Casa",
+    "bairro": "Cajuru",
+    "endereco": "Rua Dr. Petronio Romero de Souza, 227 - Cajuru - Curitiba/PR",
+    "lance": 222541.54,
+    "avaliacao": 445083.07,
+    "desconto": 50,
+    "modalidade": "Leilão 2ª Praça",
+    "encerramento": "2026-02-24",
+    "ocupacao": "desconhecido",
+    "fonte": "Topo Leilões",
+    "link": "https://topoleiloes.com.br/lote/32506/casa-rua-dr-petronio-romero-de-souza-227-cajuru-curitibapr",
+    "prioridade": false,
+    "novo": true,
+    "precoM2": null,
+    "mediaM2Bairro": 5000,
+    "score": 65,
+    "scoreBreakdown": "Desc:18/25 | Bairro:5/10 | Ocup:5/10(?) | Prazo:10/15 | Manual"
+  },
+  {
+    "id": "topo-32480",
+    "tipo": "Vaga de Garagem",
+    "bairro": "Ahú",
+    "endereco": "Rua Gabriela Mistral, 149 - Ahú - Curitiba/PR",
+    "lance": 21639.34,
+    "avaliacao": 43278.68,
+    "desconto": 50,
+    "modalidade": "Leilão 2ª Praça",
+    "encerramento": "2026-02-13",
+    "ocupacao": "desconhecido",
+    "fonte": "Topo Leilões",
+    "link": "https://topoleiloes.com.br/lote/32480/vaga-de-garagem-no-29-edificio-pontevedra-rua-gabriela-mistral-149-ahu-curitibapr",
+    "prioridade": true,
+    "novo": true,
+    "score": 45,
+    "scoreBreakdown": "Desc:18/25 | Bairro:8/10 | VagaOnly | Prazo:10/15 | Manual"
   }
 ]
