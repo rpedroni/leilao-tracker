@@ -36,10 +36,17 @@ export interface Property {
   scoreBreakdown?: string;
 }
 
+// ⚠️ ONLY these 7 neighborhoods allowed per group rules (updated Feb 15, 2026)
+// Removed: Portão, Água Verde, Bigorrilho, Alto da XV, Hugo Lange, Juvevê, Rebouças, Cristo Rei, Boa Vista, Bacacheri
+// Added: Mercês, Jardim das Américas
 export const PRIORITY_NEIGHBORHOODS = [
-  'Portão', 'Batel', 'Água Verde', 'Centro', 'Bigorrilho', 
-  'Cabral', 'Jardim Social', 'Alto da XV', 'Hugo Lange', 
-  'Juvevê', 'Rebouças', 'Cristo Rei', 'Boa Vista', 'Bacacheri', 'Tarumã'
+  'Batel',
+  'Cabral',
+  'Mercês',
+  'Tarumã',
+  'Jardim das Américas',
+  'Jardim Social',
+  'Centro'  // Curitiba only, NOT "Centro de SJP"
 ];
 
 export const GRANDE_CURITIBA = [
